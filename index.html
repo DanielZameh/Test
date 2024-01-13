@@ -69,31 +69,42 @@
     <input type="submit" value="Submit">
 </form>
 
+
 <script>
 function submitForm() {
     // Validate the form here before submission (e.g., check if URLs are valid)
 
     const name = document.getElementById('name').value;
-    const subject = `Web Dev Challenge Submission - ${name}`;
-    const body = getFormData();
-    const mailtoLink = `mailto:danielsameh2012@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoLink;
-}
-
-function getFormData() {
-    // Collect form data here and format it as needed
-    const name = document.getElementById('name').value;
     const website1 = document.getElementById('website1').value;
     // Repeat similar lines for website2 to website5
 
-    // Format the data as needed
     const formData = `Name: ${name}\n` +
-                     `Website 1: ${website1}\n` +
+                     `Website 1: ${website1}\n`;
                      // Add similar lines for website2 to website5
 
-    return formData;
+    // Send the form data to the server (replace 'your-server-endpoint' with the actual server endpoint)
+    fetch('your-server-endpoint', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ formData }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Handle the server response, e.g., show a success message to the user
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        // Handle errors, e.g., show an error message to the user
+        console.error('Error:', error);
+    });
 }
 </script>
-
 </body>
 </html>
